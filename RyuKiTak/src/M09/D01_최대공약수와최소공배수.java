@@ -5,7 +5,7 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 // https://www.acmicpc.net/problem/2609
-// 20210907
+// 20210907 push
 public class D01_최대공약수와최소공배수 {
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
