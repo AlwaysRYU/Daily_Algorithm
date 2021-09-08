@@ -1,10 +1,8 @@
-package algorithm.boj;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class boj14888_연산자끼워넣기_언젠간풀자 {
+public class boj14888_연산자끼워넣기{
 	// N개의 수열 입력받음
 	// 수와 수 사이에 끼워넣을 수 있는 N-1개의 연산자 주어짐(+,-, x, /)
 	// 만둘 수 있는 식의 결과가 최대인 것과 최소인 것
