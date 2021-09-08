@@ -63,15 +63,15 @@ public class D03_행성터널 {
 		
 		// X리스트, Y리스트 , Z리스트
 		// 조건이 min임으로 이렇게 계산할 수 있다.
-//		ArrayList<int[]> Xlist = new ArrayList<>();
-//		ArrayList<int[]> Ylist = new ArrayList<>();
-//		ArrayList<int[]> Zlist = new ArrayList<>();
+//		ArrayList<int[]> Xl = new ArrayList<>();
+//		ArrayList<int[]> Yl = new ArrayList<>();
+//		ArrayList<int[]> Zl = new ArrayList<>();
 		
-		int[][] Xlist = new int[N+1][2];
-		int[][] Ylist = new int[N+1][2];
-		int[][] Zlist = new int[N+1][2];
+		int[][] Xlist = new int[N][2];
+		int[][] Ylist = new int[N][2];
+		int[][] Zlist = new int[N][2];
 		
-		for (int i = 1; i < N+1; i++) {
+		for (int i = 0; i < N; i++) {
 			parent[i] = i;
 			st = new StringTokenizer(br.readLine());
 			int xx = Integer.parseInt(st.nextToken());
@@ -83,17 +83,30 @@ public class D03_행성터널 {
 			Ylist[i][1] = i;
 			Zlist[i][0] = zz;
 			Zlist[i][1] = i;
-//			Xlist.add(new int[] {xx, i});
-//			Ylist.add(new int[] {yy, i});
-//			Zlist.add(new int[] {zz, i});
+//			Xl.add(new int[] {xx, i});
+//			Yl.add(new int[] {yy, i});
+//			Zl.add(new int[] {zz, i});
 		}
 		
+//		for (int i = 0; i < N; i++) {
+//			Xlist[i][0] = Xl.get(i)[0];
+//			Xlist[i][1] = Xl.get(i)[1];
+//			Ylist[i][0] = yy;
+//			Ylist[i][1] = i;
+//			Zlist[i][0] = zz;
+//			Zlist[i][1] = i;
+//		}
+	
 		Arrays.sort(Xlist, new Comparator<int[]>() {
 			@Override	
 			public int compare(int[] t1, int[] t2) {
 				return t1[0] - t2[0];
 			}
 		});
+//		for (int i = 0; i < Xlist.length; i++) {
+//			System.out.println(Xlist[i][0] + " " + Xlist[i][1]);
+//		}
+		
 		Arrays.sort(Ylist, new Comparator<int[]>() {
 			@Override	
 			public int compare(int[] t1, int[] t2) {
@@ -115,7 +128,7 @@ public class D03_행성터널 {
 		ArrayList<V> Vlist = new ArrayList<>();
 		int result = 0;
 		int answer = 0; // 답		
-		for (int i = 1; i < N; i++) {
+		for (int i = 0; i < N-1; i++) {
 			Vlist.add(new V(Xlist[i+1][0] - Xlist[i][0], Xlist[i][1], Xlist[i+1][1]));
 			Vlist.add(new V(Ylist[i+1][0] - Ylist[i][0], Ylist[i][1], Ylist[i+1][1]));
 			Vlist.add(new V(Zlist[i+1][0] - Zlist[i][0], Zlist[i][1], Zlist[i+1][1]));
