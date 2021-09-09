@@ -1,0 +1,73 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
+public class boj14888_연산자끼워넣기 {
+	// N개의 수열 입력받음
+	// 수와 수 사이에 끼워넣을 수 있는 N-1개의 연산자 주어짐(+,-, x, /)
+	// 만둘 수 있는 식의 결과가 최대인 것과 최소인 것
+	// 연산자 우선순위 무시
+
+	static int N;
+	static int A[];
+	static int op[];
+	static int min = Integer.MAX_VALUE;
+	static int max = Integer.MIN_VALUE;
+
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		N = Integer.parseInt(br.readLine());
+		A = new int[N];
+		op = new int[4];
+
+		StringTokenizer st = new StringTokenizer(br.readLine(), " ");
+
+		for (int n = 0; n < N; n++) {
+			A[n] = Integer.parseInt(st.nextToken());
+		}
+		st = new StringTokenizer(br.readLine(), " ");
+		for (int n = 0; n < 4; n++) {
+			op[n] = Integer.parseInt(st.nextToken()); // 0번부터 + - X / 순서
+		}
+		bt(1, A[0]);
+
+		System.out.println(max);
+		System.out.print(min);
+
+	}
+
+	static void bt(int deep, int dap) {
+		if (deep == N) {
+			if (dap < min) {
+				min = dap;
+			}
+			if (dap > max) {
+				max = dap;
+			}
+			return;
+		}
+		int result = 0;
+		for (int i = 0; i < 4; i++) { // 계산 연산자 배열 크기만큼 도는데
+			if (op[i] != 0) { // 0이 아니면 즉 계산 값이 있으면
+				op[i]--; // - 감소시키고
+				switch (i) {
+				case 0: // + 일 떄
+					result = dap + A[deep];
+					break;
+				case 1: // - 일 떄
+					result = dap - A[deep];
+					break;
+				case 2: // * 일 떄
+					result = dap * A[deep];
+					break;
+				case 3: // / 일 떄
+						result = dap / A[deep];
+					break;
+				}
+				bt(deep + 1, result);
+				op[i]++;// - 했던거 다시 + 시켜줘서 다시 계산할 수 있게끔
+			}
+
+		}
+	}
+}
