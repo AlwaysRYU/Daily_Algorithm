@@ -1,0 +1,77 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
+public class BOJ1002_터렛 {
+	// 상대편 마린의 위치를 계산하라,
+	// 이석원이 조규현이랑 백승환한테 류재명위치 계산하라 함.
+	// 조규현이랑 백승환이 각각의 터렛 위치에서 류재명까지의 거리 계산
+	// 조규현(X1,Y1), 백승환(X2,Y2) 가 주어짐
+	// 조규현이 계산한 류재명과의 거리 R1,
+	// 백승환이 계산한 류재명과의 거리 R2가 주어졌을 때
+	// 류재명이 있을 수 있는 좌표의 수를 출력하는 프로그램을 만들어라
+
+	// 입력 받는 순서 X1,Y1,R1,X2,Y2,R2
+
+	// 중점간 거리를 계산하여
+	// 1. 두 원의 중심도 같고, 반지릅도 같을 경우 - 접점 무한
+	// 2. 두 점 사이의 거리가 원의 반지름 합보다 클 때 - 접점 없음
+	// 3. 내접한 원의 반지름의 차이가 두 원간의 중점거리보다 크다 - 접점 없음
+	// 4. 내접한 원의 반지름의 차이가 두 원간의 중접거리와 같다 - 접점 하나
+	// 5. 외접한 두 좌표간의 거리가 두 원의 반지름의 합과 같다 - 접접 하나
+
+	static int T, x1, y1, r1, x2, y2, r2;
+	static StringBuilder sb = new StringBuilder();
+
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+		T = Integer.parseInt(br.readLine());
+		for (int t = 0; t < T; t++) {
+			
+			StringTokenizer st = new StringTokenizer(br.readLine(), " ");
+			
+			x1 = Integer.parseInt(st.nextToken());
+			y1 = Integer.parseInt(st.nextToken());
+			r1 = Integer.parseInt(st.nextToken());
+
+			x2 = Integer.parseInt(st.nextToken());
+			y2 = Integer.parseInt(st.nextToken());
+			r2 = Integer.parseInt(st.nextToken());
+
+			sb.append(circle(x1, y1, r1, x2, y2, r2)).append('\n');
+		}
+		System.out.print(sb);
+	}
+
+	static int circle(int x1, int y1, int r1, int x2, int y2, int r2) {
+
+		int r = (int) (Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2)); // 중점간 거리의 제곱 (x2-x1)^2 + (y2-y1)^2 > (r1+r2)^2
+
+		// 1. 두 원의 중심도 같고, 반지릅도 같을 경우 - 접점 무한
+		if (x1 == x2 && y1 == y2 && r1 == r2) {
+			return -1;
+		}
+		// 2. 두 점 사이의 거리가 원의 반지름 합보다 클 때 - 접점 없음
+		if (r > Math.pow(r1 + r2, 2)) {
+			return 0;
+		}
+
+		// 3. 내접한 원의 반지름의 차이가 두 원간의 중점거리보다 크다 - 접점 없음
+		if (r < Math.pow(r1 - r2, 2)) {
+			return 0;
+		}
+
+		// 4. 내접한 원의 반지름의 차이가 두 원간의 중접거리와 같다 - 접점 하나
+		if (r == Math.pow(r1 - r2, 2)) {
+			return 1;
+		}
+
+		// 5. 외접한 두 좌표간의 거리가 두 원의 반지름의 합과 같다 - 접접 하나
+		if (r == Math.pow(r1 + r2, 2)) {
+			return 1;
+		} else {
+			return 2;
+		}
+	}
+}
