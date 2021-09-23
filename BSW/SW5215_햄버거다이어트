@@ -1,0 +1,57 @@
+import java.util.Scanner;
+
+public class SW5215_햄버거다이어트 {
+   
+   public static void main(String[] args) {
+      //재료의 수 N, 제한 칼로리 L
+      //재료에 해당하는 맛에 대한 점수 T[], 칼로리 나타내는 K[] 
+      //햄버거 점수에 대해 계산하는 2차원 배열 D생성 D[N+1][L+1]
+      //for(i -> N)
+      //  for( j -> L)	 
+      //      if (j >= K[i]) -> D[i][j] = Math.max(D[i-1][j], T[i]+D[i-1][j-K[j])
+      //      Else -> D[i][j] = D[i-1][j]
+      // syso D[N][L]
+      
+      Scanner sc = new Scanner(System.in);
+      
+      int tk = sc.nextInt();
+      
+      for(int t = 1; t <= tk; t++) {
+         
+         int N = sc.nextInt();//재료개수
+         int L = sc.nextInt();//칼로리 제한값
+         
+         int[] T = new int[N+1];
+         int[] K = new int[N+1];
+         
+         
+         for(int i = 1; i <= N ; i++) {
+            T[i] = sc.nextInt();
+            K[i] = sc.nextInt();
+         }
+         
+         int D[][] = new int[N+1][L+1];
+         
+         
+         for(int i = 1; i <= N; i++) {
+            for(int j = 0; j <= L; j++ ) {
+               
+               if(j >= K[i]) {
+                  D[i][j] = Math.max(D[i-1][j], T[i] + D[i-1][j - K[i]]);
+               }else {
+                  D[i][j] = D[i-1][j];
+               }
+               
+            }
+         }
+         
+         System.out.println("#"+t+" "+D[N][L]);
+        
+      }//tk마지막
+      
+      
+      
+      
+      
+   }
+}
