@@ -1,0 +1,57 @@
+import java.util.Scanner;
+
+public class 공통문제_boj2225_합분해 {
+
+	public static void main(String[] args) {
+		// 0~N까지 정수 K개 더해서 그 합이 N인 경우의 수 구하기.. 얾
+		// 첫째 줄에 답을 1000000000으로 나눈 나머지 출력??????
+		// 0~N까지, k개의 갯수로 만들수 있는 경우의 수
+		// 
+		/*
+	   n/k 
+	   //n이 0이면 자기자신 뿐이니까 경우의 수 1개
+	   //n이 1이고 k가 2면 0-1, 1-0 해서 2개 k 가 3이면 001-100-010 3개 
+		n/k  1  2  3
+		0    1  1  1 
+		1    1  2  3
+		2    1  3  6
+		3    1  4  10
+		4    1  5  15
+		
+		n이 3일 경우
+		k = 2
+		-> dp[n-0][1] + dp[n-1][1] + dp[n-2][1] = 3
+		k = 3
+		-> dp[n-0][2] + dp[n-1][2] + dp[n-2][2] = 6
+		
+		
+		*/
+		Scanner sc = new Scanner(System.in);
+
+		int N = sc.nextInt();
+		int K = sc.nextInt();
+		
+		int mod = 1000000000;
+		long[][] dp = new long[N + 1][K + 1];
+
+		for (int i = 1; i <= K; i++) { 
+			dp[0][i] = 1; //N이 0일때는 경우의 수가 자기자신만 있으니까  1로 초기화
+			dp[1][i] =i;
+		}
+		for (int i = 1; i <= N; i++) { 
+			dp[i][1] = 1;
+		}
+
+		for (int i = 2; i <= N; i++) {
+			for (int j = 2; j <= K; j++) {
+				dp[i][j] = (dp[i][j-1]+dp[i-1][j]) % mod; 
+
+			}
+
+		}
+
+		System.out.println(dp[N][K]);
+
+	}
+
+}
