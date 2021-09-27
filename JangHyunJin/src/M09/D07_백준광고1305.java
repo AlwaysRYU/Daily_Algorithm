@@ -1,4 +1,4 @@
-package strings;
+Sum.javapackage strings;
 
 import java.io.BufferedReader;
 import java.io.IOException;
