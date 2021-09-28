@@ -26,23 +26,21 @@ public class boj9012_괄호 {
 				ch = str.charAt(cnt);
 				if (ch == '(') {
 					stack.push(ch);
-				} else { // 괄호가")"이 모양이면 앞선 괄호가 "("이 모양인지 확인해야함
-					if(stack.isEmpty()) { //스택이 비어있으면 문자 집어넣음
+				} else { 			// 현재 인덱스의 괄호가 닫힌괄호')' 이면 앞선 괄호가 열린 괄호'(' 인지 확인해야함
+					if(stack.isEmpty()) {   //스택이 비어있으면 문자 집어넣음
 						stack.push(ch);
-					}else if(stack.peek().equals('(')){ //현재 인덱스 위치의 괄호가 ')'이모양일 때 스택에 들어있는 괄호가'('이것이면 짝이 맞으므로 pop
+					}else if(stack.peek().equals('(')){ //현재 인덱스 위치의 괄호가 닫힌 괄호')'일 때 스택에 들어있는 괄호가 열린괄호'('이면 짝이 맞으므로 pop
 						stack.pop();
 					}
 				}
 			}
-
 			if(!stack.isEmpty()) {
-				System.out.println("NO");
+				System.out.println("NO"); //스택이 비워져있지 않으면 짝이 안맞는다는 뜻이므로 NO
 			}else {
-				System.out.println("YES");
+				System.out.println("YES"); //스택이 비워져있으면 짝이 맞았다는 뜻이므로 YES
 			}
 			
-			stack.clear();
-		
+			stack.clear();		
 		}
 	}
 
