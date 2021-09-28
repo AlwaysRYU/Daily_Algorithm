@@ -1,0 +1,49 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.Stack;
+import java.util.StringTokenizer;
+
+public class boj9012_괄호 {
+
+	public static void main(String[] args) throws Exception {
+		// 괄호 문자열운 '('와 ')'만으로 구성되어있음.
+		// 입력된 문자열이 VPS(열고닫히기가 정상적으로 이루어진 문자열)인지 확인 후 NO, YES출력
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		Stack<Character> stack = new Stack<Character>();
+		int T = Integer.parseInt(br.readLine());
+		for (int i = 0; i < T; i++) {
+			StringTokenizer st = new StringTokenizer(br.readLine());
+			// 스택에 하나씩 넣는다
+			// 여는 괄호 후 가장 가까운 위치에 닫는 괄호가 나오면 pop!
+
+			String str = st.nextToken(); //한 줄의 괄호 문자열 받음
+			char ch = str.charAt(0); // 0번째 인덱스 ch에 넣은 후
+			stack.push(ch);   //스택에 저장함
+			int cnt = 0; // 문자열 1인덱스부터 끝까지 지정하기 위한 cnt
+      
+			while (cnt!=str.length()-1) {
+				cnt++;
+				ch = str.charAt(cnt);
+				if (ch == '(') {
+					stack.push(ch);
+				} else { // 괄호가")"이 모양이면 앞선 괄호가 "("이 모양인지 확인해야함
+					if(stack.isEmpty()) { //스택이 비어있으면 문자 집어넣음
+						stack.push(ch);
+					}else if(stack.peek().equals('(')){ //현재 인덱스 위치의 괄호가 ')'이모양일 때 스택에 들어있는 괄호가'('이것이면 짝이 맞으므로 pop
+						stack.pop();
+					}
+				}
+			}
+
+			if(!stack.isEmpty()) {
+				System.out.println("NO");
+			}else {
+				System.out.println("YES");
+			}
+			
+			stack.clear();
+		
+		}
+	}
+
+}
