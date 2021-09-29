@@ -1,0 +1,81 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.StringTokenizer;
+
+public class boj4963_섬의개수 {
+
+	static int dy[] = { -1, 1, 0, 0, -1, -1, 1, 1 }; // 상, 하, 좌, 우, 좌상, 우상, 좌하, 우하
+	static int dx[] = { 0, 0, -1, 1, -1, 1, -1, 1 };
+	static int[][] map;
+	static int cnt;
+
+	public static void main(String[] args) throws Exception {
+		// 섬의 개수 세는 프로그램
+		// 가로,세로,대각선으로 연결되어있으면 하나의 섬
+		while (true) {
+			cnt = 0;//cnt초기화
+			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+			StringTokenizer st = new StringTokenizer(br.readLine());
+			int w = Integer.parseInt(st.nextToken());// 넓이
+			int h = Integer.parseInt(st.nextToken());// 높이
+			if (w == 0 && h == 0) {
+				break;
+			}
+
+			map = new int[h][w];
+			// 1은 땅, 0은 바다
+
+			for (int i = 0; i < h; i++) {
+				String str = br.readLine();
+				for(int j =0; j < w; j++) {
+					map[i][j] = str.charAt(j)-'0';
+				}
+			}
+
+			
+			for (int i = 0; i < h; i++) {
+				for (int j = 0; j < w; j++) {
+					if(map[i][j]==0) continue;
+					bfs(i, j, h, w);
+				}
+			}
+				
+			System.out.println(cnt);
+
+		} // 테스트케이스 끝
+	}
+
+	static void bfs(int y, int x, int h, int w) {
+		// dy, dx사용하여 연결되어있는 칸 확인할 것
+		// 섬의 갯수가 몇개인지 알아야 하니까 새 섬 탐색할때마다 cnt++증가
+		// 이미 탐색한 섬은 0으로 만들어줄것임
+		Queue<Node> que = new LinkedList<Node>();
+
+		
+		que.offer(new Node(y, x));
+		cnt++;
+		while (!que.isEmpty()) {
+
+			Node n = que.poll();
+			
+			for (int k = 0; k < 8; k++) {
+				int ny = n.y + dy[k];
+				int nx = n.x + dx[k];
+				if (ny < 0 || nx < 0 || ny >= h || nx >= w || map[ny][nx]==0) continue;
+				que.offer(new Node(ny,nx));
+				map[ny][nx] = 0;
+			}
+		}
+	}
+
+	static class Node {
+		int y, x;
+
+		public Node(int y, int x) {
+			this.y = y;
+			this.x = x;
+		}
+	}
+}
