@@ -63,13 +63,9 @@ public class boj2468_안전지역 {
 				
 				que.offer(new Node(ny, nx));
 				visit[ny][nx] = true;
-				
 			}
-
 		}
-
 	}
-
 	static class Node {
 		int y, x;
 
@@ -78,5 +74,4 @@ public class boj2468_안전지역 {
 			this.x = x;
 		}
 	}
-
 }
