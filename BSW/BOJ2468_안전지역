@@ -12,7 +12,7 @@ public class boj2468_안전지역 {
 	// N아래로는 0처리
 	// 똑같은 크기 배열 만들어서 visit체크
 	// bfs수행
-	// que하나 끝날 때 마다 1씩 증가
+	// que하나 끝날 때 마다 cnt 1씩 증가하여 섬의 개수 
 	static int map[][];
 	static int dy[] = { -1, 1, 0, 0 }; // 상하좌우
 	static int dx[] = { 0, 0, -1, 1 }; // 상하좌우
