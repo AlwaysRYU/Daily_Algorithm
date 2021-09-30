@@ -1,0 +1,82 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.StringTokenizer;
+
+public class boj2468_안전지역 {
+	// 물에 잠기지 않는 안전한 영역이 최대로 몇개가 만들어 지는지 조사
+	// 일정한 높이 이하의 모든 지점은 물에 잠김
+	// 물에 잠기지 않는 영역은 일정한 높이 이상의 값을 가진 지역이 위,아래,오른쪽,왼쪽으로 인접해있음.
+
+	// N아래로는 0처리
+	// 똑같은 크기 배열 만들어서 visit체크
+	// bfs수행
+	// que하나 끝날 때 마다 1씩 증가
+	static int map[][];
+	static int dy[] = { -1, 1, 0, 0 }; // 상하좌우
+	static int dx[] = { 0, 0, -1, 1 }; // 상하좌우
+	static boolean[][] visit; // 방문체크
+	static int cnt, N;
+
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		 N = Integer.parseInt(br.readLine());
+		map = new int[N][N];
+		visit = new boolean[N][N];
+		for (int i = 0; i < N; i++) {
+			StringTokenizer st = new StringTokenizer(br.readLine());
+			for (int j = 0; j < N; j++) {
+				int num = Integer.parseInt(st.nextToken());
+				if (num <= N) {
+					map[i][j] = 0;
+				} else {
+					map[i][j] = num;
+				}
+			}
+		}
+		for (int i = 0; i < N; i++) {
+			for (int j = 0; j < N; j++) {
+				if (visit[i][j] || map[i][j] == 0)
+					continue;// 이미 방문한 곳 이거나, 값이 0이면 넘어감
+				bfs(i, j);
+				cnt++;
+			}
+		}
+		
+		System.out.println(cnt);
+	}
+
+	static void bfs(int y, int x) {
+		visit[y][x] = true;
+		
+		Queue<Node> que = new LinkedList<Node>();
+		que.offer(new Node(y, x));
+		while (!que.isEmpty()) {
+			Node n = que.poll();
+			for (int k = 0; k < 4; k++) {
+				int ny = n.y + dy[k];
+				int nx = n.x + dx[k];
+
+				if (ny < 0 || nx < 0 || ny >= N || nx >= N ) continue;
+				if(map[ny][nx] == 0 || visit[ny][nx]) continue;
+				
+				que.offer(new Node(ny, nx));
+				visit[ny][nx] = true;
+				
+			}
+
+		}
+
+	}
+
+	static class Node {
+		int y, x;
+
+		public Node(int y, int x) {
+			this.y = y;
+			this.x = x;
+		}
+	}
+
+}
