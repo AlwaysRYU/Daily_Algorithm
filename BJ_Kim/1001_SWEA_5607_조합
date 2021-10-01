@@ -1,0 +1,48 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
+public class Solution {
+	static long T,N,R;
+	final static long MOD = 1234567891;
+	public static void main(String[] args) throws Exception{
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		T = Integer.parseInt(br.readLine());
+		for (int t = 1; t <= T; t++) {
+			StringTokenizer st = new StringTokenizer(br.readLine());
+			N = Integer.parseInt(st.nextToken());
+			R = Integer.parseInt(st.nextToken());
+			
+			long top = fac(N);
+			
+			long bottom = fac(R) * fac(N-R) % MOD;
+			
+			System.out.println("#" + t + " " + top*pow(bottom,MOD-2) % MOD);
+		}
+		//페르마의 소정리
+		// p : 소수 , a : p의 배수가 아닌 수일 때,
+		// a^(p-1)%p = 1 ==> a^(p-1) == 1(mod p)
+	}
+	public static long fac(long N) {
+		long num = 1L;
+		
+		while(N> 1) {
+			num = (num * N ) % MOD;
+			N--;
+		}
+		return num;
+	}
+	public static long pow(long base,long expo) {
+		long num = 1;
+		
+		while(expo > 0) {
+			if(expo %2 == 1 ) {
+				num *= base;
+				num%= MOD;
+			}
+			base = base*base % MOD;
+			expo /= 2;
+		}
+		return num;
+	}
+}
