@@ -21,7 +21,7 @@ ex)
 9월 26일 문제를 28일 오전 9시까지 올리지 않음 + 27일 풀었음 : 2000원
 9월 26일 문제를 28일 오전 9시까지 올리지 않음 + 27일 안풀었음 : 3000원
 ```
-* 출석, 장부 스프레드 링크
+* 출석, 장부 스프레드 링크   
 https://docs.google.com/spreadsheets/d/14n77qcYpE6_26VJVR8edWpt9Z6Sy9qil4ZzU-tEmEm8/edit?usp=sharing
 
 ## ✈ 공통문제

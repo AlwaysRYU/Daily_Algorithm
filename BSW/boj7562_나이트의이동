@@ -1,0 +1,70 @@
+package online.boj;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.StringTokenizer;
+
+public class boj7562_나이트의이동 {
+
+	static int[] dy = { -1, -2, -2, -1, 1, 2, 2, 1 };
+	static int[] dx = { -2, -1, -1, 2, 2, 1, -1, -2 };
+	static int map[][];
+	static boolean visit[][];
+	static int T, I, nR, nC, lR, lC;
+
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		T = Integer.parseInt(br.readLine());
+		for (int t = 0; t < T; t++) {
+			I = Integer.parseInt(br.readLine());
+			map = new int[I][I];
+			visit = new boolean[I][I];
+			StringTokenizer st = new StringTokenizer(br.readLine());
+			nR = Integer.parseInt(st.nextToken());// 시작
+			nC = Integer.parseInt(st.nextToken());
+
+			st = new StringTokenizer(br.readLine());
+			lR = Integer.parseInt(st.nextToken());// 목적지
+			lC = Integer.parseInt(st.nextToken());
+			
+			BFS(nR, nC);
+			System.out.println(map[lR][lC]);
+		}
+
+	}
+
+	static void BFS(int y, int x) {
+		Queue<Node> que = new LinkedList<Node>();
+		visit[y][x] = true;
+		que.offer(new Node(y, x));
+		while (!que.isEmpty()) {
+			Node start = que.poll();
+			if(start.y==lR && start.x == lC) return; 
+
+			for (int k = 0; k < 8; k++) {
+				int ny = start.y + dy[k];
+				int nx = start.x + dx[k];
+
+				if (ny < 0 || nx < 0 || ny >= I || nx >= I ) continue;
+				
+				if(visit[ny][nx]) continue;
+				
+				que.offer(new Node(ny, nx));
+				visit[ny][nx] = true;
+				map[ny][nx] = map[start.y][start.x] + 1;
+			}
+		}
+	}
+
+	static class Node {
+		int y, x;
+
+		public Node(int y, int x) {
+			this.y = y;
+			this.x = x;
+		}
+	}
+
+}
