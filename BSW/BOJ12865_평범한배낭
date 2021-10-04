@@ -33,8 +33,4 @@ public class boj12865_평범한배낭 {
 		System.out.println(D[N][K]);
 		
 	}
-	
-
-
-
 }
