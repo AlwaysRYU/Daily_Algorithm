@@ -25,6 +25,7 @@ public class swea_1245균형점 {
 				m[i] = Integer.parseInt(st.nextToken()); // 질량
 			}
 
+			
 			System.out.printf("#%d ", test_case);
 			for (int i = 0; i < n - 1; i++) {
 				binarySearch(i, px[i], px[i + 1]);
