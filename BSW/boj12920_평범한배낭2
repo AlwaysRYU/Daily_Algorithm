@@ -1,0 +1,45 @@
+package algorithm.boj;
+
+import java.util.Scanner;
+
+public class boj_12920평범한배낭2 {
+	// 평범한 배낭1과 다른 점 - 중복 가능
+	// 인터넷 - 비트마스크사용
+	// 음?
+	// 모든 자연수는 2의 거듭제곱 합으로 나타낼 수 있음
+	// => 한 물건을 7번 담았다 -> 1 + 2 + 4 -> .???
+	// 물건을 1개씩 추가하는 것이 아니라, 2의 거듭제곱씩 추가하게 되면 모든 수를 다 고려할 수 있게 된다.
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+
+		int N = sc.nextInt();// 물품의 수
+		int K = sc.nextInt();// 버틸 수 있는 무게
+
+		int[] W = new int[N + 1];
+		int[] V = new int[N + 1];
+		int[] C = new int[N + 1];
+//		int tmp = 0;
+		for (int i = 1; i <= N; i++) {
+			W[i] = sc.nextInt();
+			V[i] = sc.nextInt();
+			C[i] = sc.nextInt(); // 한 물품의 개수
+//			tmp += C[i]; // 물품의 개수를 다 더해야.. D의 행개수 결정..
+		}
+
+		int D[][] = new int[N + 1][K + 1];
+
+		for (int i = 1; i <= N; i++) {
+				for (int j = 0; j <= K; j++) {
+					if (j >= W[i]) {// 여기서 비트마스크..?
+						D[i][j] = Math.max(D[i - 1][j], V[i] + D[i - 1][j - W[i]]);
+					} else {
+						D[i][j] = D[i - 1][j];
+					}
+
+			}
+		}
+
+		System.out.println(D[N][K]);
+	}
+}
