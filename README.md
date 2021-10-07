@@ -21,8 +21,6 @@ ex)
 9월 26일 문제를 28일 오전 9시까지 올리지 않음 + 27일 풀었음 : 2000원
 9월 26일 문제를 28일 오전 9시까지 올리지 않음 + 27일 안풀었음 : 3000원
 ```
-* 출석, 장부 스프레드 링크   
-https://docs.google.com/spreadsheets/d/14n77qcYpE6_26VJVR8edWpt9Z6Sy9qil4ZzU-tEmEm8/edit?usp=sharing
 
 ## ✈ 공통문제
 |날짜|문제이름|문제링크|유형 |
@@ -31,3 +29,4 @@ https://docs.google.com/spreadsheets/d/14n77qcYpE6_26VJVR8edWpt9Z6Sy9qil4ZzU-tEm
 |2021.09.13.|포도주시식|https://www.acmicpc.net/problem/2156|DP|
 |2021.09.20.|추석연휴|||
 |2021.09.27.|합분해|https://www.acmicpc.net/problem/2225|DP|
+|2021.10.07.|평범한배낭2|https://www.acmicpc.net/problem/12920|DP|
