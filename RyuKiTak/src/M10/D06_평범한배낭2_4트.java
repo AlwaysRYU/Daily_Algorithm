@@ -41,12 +41,19 @@ public class D06_평범한배낭2_4트 {
 				K -= temp;
 			}
 		}
+		
+		
 		for (int i = 0; i < weight.size(); i++) {
 			for (int j = M; j >= 0; j--) {
+				System.out.println(j + " weight : " + weight.get(i)  );
 				if ( j >= weight.get(i) ) {
+					
+//					arr[i][j] = Math.max(arr[i][j], arr[i-1][j-weight] + Value);		
+					
 					dp[j] = Math.max(dp[j], dp[j-weight.get(i)] + satisfaction.get(i));
 				}
 			}
+			System.out.println(Arrays.toString(dp));
 			
 		}
 			
