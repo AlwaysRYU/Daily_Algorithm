@@ -1,0 +1,89 @@
+package algorithm.boj;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.PriorityQueue;
+import java.util.StringTokenizer;
+
+public class boj4485_녹색옷을입은애가젤다지 {
+	// 다익스트라 => 아님 dfs로 품
+	// 링크는 [0][0]칸에서 [N-1][N-1]칸까지 이동해야함
+	// 각 칸마다 도둑루피가 있음. 도둑루피를 만나면 도둑루피의 크기만큼 소지금을 잃음
+	// 잃는 금액을 최소로 하여 동굴 건너편까지 이동해야 함.
+	// 한번에 상하좌우 1칸씩 이동가능
+	// 잃을 수 밖에 없는 최소 금액은 얼마?
+
+	static int N, min;// 동굴의 크기
+	static int[][] d; // 동굴
+	static int dy[] = { -1, 1, 0, 0 };
+	static int dx[] = { 0, 0, -1, 1 };
+	static boolean[][] visit;
+	static int callCnt;
+	
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		
+		int t = 1;
+		while(true) {
+			callCnt = 0;
+			N = Integer.parseInt(br.readLine());
+			if(N == 0) break;
+			d = new int[N][N];
+		visit = new boolean[N + 1][N + 1];
+		min = Integer.MAX_VALUE;
+		for (int i = 0; i < N; i++) {
+			StringTokenizer st = new StringTokenizer(br.readLine());
+			for (int j = 0; j < N; j++) {
+				d[i][j] = Integer.parseInt(st.nextToken());
+			}
+		}
+		visit[0][0]	 = true;
+		
+		DFS(0,0,d[0][0]);
+		t++;
+		}
+	}
+
+	static void DFS(int y, int x, int c) {
+		callCnt++;
+//		pque.offer(new Edge(1, 1));
+//		while (!pque.isEmpty()) {
+//			Edge e = pque.poll();
+//
+//			if (visit[e.y][e.x]) continue; //방문한 적 있으면 넘어간다
+//			visit[e.y][e.x] = true;//방문체크하고 4방향 탐색
+		
+		if( y == N-1 && x == N-1 ) {
+			min = Math.min(min, c);
+			return;
+		}
+		
+		
+			for (int k = 0; k < 4; k++) {
+				int ny = y + dy[k];
+				int nx = x + dy[k];
+				
+				if(ny < 0|| nx < 0 || ny >= N || nx >= N || visit[ny][nx]) continue;
+				
+				if(c + d[ny][nx] >= min) continue;
+				
+				visit[ny][nx] = true;
+				DFS(ny, nx, c + d[ny][nx]);
+				visit[ny][nx] = false;
+				
+			}
+//		}
+
+	}
+
+//	static class Edge {
+//		int y;
+//		int x;
+//
+//		public Edge(int v, int w) {
+//			this.y = v;
+//			this.x = w;
+//		}
+//	}
+
+}
