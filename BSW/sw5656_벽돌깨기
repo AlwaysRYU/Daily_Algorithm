@@ -14,7 +14,7 @@ public class SW5656_벽돌깨기 {
 
 	public static void main(String[] args) throws Exception {
 		//백트래킹
-		//부슨 벽돌 개수 temp에 저장 -> 초기화 -> 저장->초기화 
+		//부슨 벽돌 개수 temp에 저장 -> 초기화 -> 저장-> 벽돌개수 - 가장많이부순값
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int T = Integer.parseInt(br.readLine());
