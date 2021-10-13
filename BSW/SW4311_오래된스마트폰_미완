@@ -1,0 +1,35 @@
+package algorithm.swep;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
+public class SW4311_오래된스마트폰 {
+
+	// 스크린에서 터치가 안되는 부분의 숫자느
+	// 터치가 되는 숫자의 조합으로 표현 가능
+	// ex) 5 표현 -> 2 + 3 = <- 4번 터치
+	// 원하는 숫자를 만들고자 할 때 최소 터치 횟수를 찾는 프로그램
+	// 음수,999넘어가면 문제
+	// 터치회수가 M을 넘어가면 안됨 , M이 될 때 까지 원하는 숫자 만들 수 없으면 -1 출력
+
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int T = Integer.parseInt(br.readLine());
+		for (int t = 0; t <= T; t++) {
+			StringTokenizer st = new StringTokenizer(br.readLine());
+			int N = Integer.parseInt(st.nextToken());
+			int O = Integer.parseInt(st.nextToken());
+			int M = Integer.parseInt(st.nextToken());
+
+			st = new StringTokenizer(br.readLine());
+			int[] touch = new int[O];
+			for (int i = 0; i < O; i++) {
+				touch[i] = Integer.parseInt(st.nextToken());
+			}//이렇게 받는게 맞는가
+			
+			//어떻게 풀어나가야하지..
+
+		}
+	}
+}
