@@ -1,0 +1,106 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.StringTokenizer;
+
+public class boj16954_움직이는미로탈출 {
+	// 8X8체스판에서 탈출해야함
+	// 체스판의 모든 칸은 빈 칸 또는 벽 중 하나
+	// 왼쪽 아래에서 오른쪽 윗 칸으로 이동
+	// 벽이 1초마다 아래에 있는 행으로 한칸씩 내려감
+	// 가장 아래에 행이 없으면 벽 소멸
+	// 한칸 또는 대각선 방향으로 인접한 한칸 이동, 현재 위치에 서 있음.
+	// 욱제 => 벽
+	// 벽이 캐릭터가 있는 칸으로 이동하면 캐릭터 더 이동 못함.
+	// 오른쪽 윗 칸으로 이동할 수 있는지 없는지
+
+	static char[][] map = new char[8][8];
+	static boolean[][] visited = new boolean[8][8];
+	static boolean result = true;;
+	static Queue<Node> que = new LinkedList<Node>();
+
+	public static void main(String[] args) throws Exception {
+		// .은 빈 칸, # 은 벽
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+
+		for (int i = 0; i < 8; i++) {
+			map[i] = st.nextToken().toCharArray();
+			for (int j = 0; j < 8; j++) {
+				if (map[i][j] == '#') {// #이 하나도 안나오면 true
+					result = false;
+				}
+			}
+		}
+
+		if (result) {// true면 1 출력
+			System.out.println("1");
+		} else {
+			que.offer(new Node(7, 7));
+			boolean res = go();
+			if(!res) {
+				System.out.println("0");
+			}else {
+				System.out.println("1");
+			}
+		}
+	}
+
+	static int[] dy = { 0, -1, -1, -1, 0, 1, 1, 1, 0 };
+	static int[] dx = { 0, -1, 0, 1, 1, 1, 0, -1, -1 };
+	static int[] dny = { 1 };
+
+	private static boolean go() {
+
+		while (!que.isEmpty()) {
+			
+			
+			Node n = que.poll();
+			if(map[n.y][n.x]=='#') {
+				result = false;
+				return result;
+			}
+			
+			visited[n.y][n.x] = true;
+			
+			for (int k = 0; k < 8; k++) {
+				int ny = n.y + dy[k];
+				int nx = n.x + dx[k];
+
+				if (ny < 0 || nx < 0 || ny > 8 || nx > 8)
+					continue;
+				if (visited[ny][nx] || map[ny][nx] == '#')
+					continue;
+				que.offer(new Node(ny, nx));
+				visited[ny][nx] = true;
+				down();
+				
+			}
+		}
+		return result;
+	}
+
+	private static void down() {
+		for(int i = 7; i >= 0; i--) {
+			for(int j = 0; j < 8; j++) {
+				if(map[i][j] == '#') {
+					int ny = i + dny[0];
+					if(ny > 7 ) map[i][j] = '.';
+					map[ny][j] = '#';
+					map[i][j] = '.';
+				}
+			}
+		}
+	}
+	static class Node {
+		int y, x;
+
+		public Node(int y, int x) {
+			this.y = y;
+			this.x = x;
+		}
+	}
+}
