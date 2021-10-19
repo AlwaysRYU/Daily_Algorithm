@@ -6,8 +6,8 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class 움직이는미로탈출_16954 {
-	static int[] dr = { -1, -1, 0, 1, 1, 1, 0, -1 };
-	static int[] dc = { 0, 1, 1, 1, 0, -1, -1, -1 };
+	static int[] dr = { -1, -1, 0, 1, 1, 1, 0, -1, 0 };
+	static int[] dc = { 0, 1, 1, 1, 0, -1, -1, -1, 0 };
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		Queue<Integer[]> q = new LinkedList<>();
@@ -42,7 +42,7 @@ public class 움직이는미로탈출_16954 {
 				break;
 			}
 			
-			for (int i = 0; i < 8; i++) {
+			for (int i = 0; i < 9; i++) {
 				int nr = cr + dr[i];
 				int nc = cc + dc[i];
 				int nsec = sec + 1;

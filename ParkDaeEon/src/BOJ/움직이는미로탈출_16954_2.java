@@ -33,10 +33,10 @@ public class 움직이는미로탈출_16954_2 {
 				int cr = q.peek()[0];
 				int cc = q.peek()[1];
 				int sec = q.poll()[2];
-				
+				// 벽이 캐릭터가 있는 칸으로 이동한 경우
 				if (arr[cr][cc] == '#') continue;
 				
-				for (int i = 0; i < 8; i++) {
+				for (int i = 0; i < 9; i++) {
 					int nr = cr + dr[i];
 					int nc = cc + dc[i];
 					int nsec = sec + 1;
