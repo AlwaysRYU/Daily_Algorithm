@@ -1,0 +1,63 @@
+package algorithm;
+
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Scanner;
+
+public class boj2644_촌수계산 {
+	///관계없으면 -1
+	//사람 수 n명
+	//촌 수 계산해야하는 서로 다른 두 사람의 번호 p1, p2
+	//부모 자신들 간의 관계의 개수 m
+	//부모 자식들 간의 관계를 나타내는 두 번호 x, y
+	//
+	static int N, M, x, y, p1, p2;
+	static int map[][];
+	static boolean visit[][];
+	static Queue<Node> que = new LinkedList<Node>();
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		N = sc.nextInt();
+		p1 = sc.nextInt();
+		p2 = sc.nextInt();
+		M = sc.nextInt();
+		map = new int[N][N];
+		visit = new boolean[N][N];
+		
+		for(int i = 0; i < M; i++) {
+			int x = sc.nextInt();
+			int y = sc.nextInt();
+			map[x][y] = 1;
+			map[y][x] = 1;
+		}
+		
+		bfs(p1,p2);
+		
+		
+	}
+
+	
+	static void bfs(int p1, int p2) {
+        
+        que.offer(new Node(p1, 0));
+        visit[p1][p2] = true;
+        while (!que.isEmpty()) {
+        	Node n = que.poll();
+            int start2 = n.num;
+            if (start2 == p2) {
+                break;
+            }
+        }
+    }
+
+    static class Node {
+        int num; //번호
+        int cnt; //촌수
+
+        public Node(int num, int cnt) {
+            this.num = num;
+            this.cnt = cnt;
+        }
+    }
+	
+}
