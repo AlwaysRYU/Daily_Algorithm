@@ -60,11 +60,13 @@ public class D16_움직이는미로탈출_2트 {
 			int temp = 0;
 			while( temp < Qcount ) {
 				Node now = Q.poll();
+				temp += 1;
 				
 				if (field[now.x][now.y] == 1) {
 					temp += 1;
 					continue;
 				}
+				
 				if (now.x == 0) {
 					System.out.println(1);
 					return;
@@ -79,7 +81,7 @@ public class D16_움직이는미로탈출_2트 {
 					visit[nx][ny] =true;
 				}
 				
-				temp += 1;
+				
 			}
 			
 			// 벽이동
