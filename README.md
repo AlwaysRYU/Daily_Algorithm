@@ -29,4 +29,6 @@ ex)
 |2021.09.13.|포도주시식|https://www.acmicpc.net/problem/2156|DP|
 |2021.09.20.|추석연휴|||
 |2021.09.27.|합분해|https://www.acmicpc.net/problem/2225|DP|
-|2021.10.07.|평범한배낭2|https://www.acmicpc.net/problem/12920|DP|
+|2021.10.7.|평범한배낭2|https://www.acmicpc.net/problem/12920|DP|
+|2021.10.11.|공휴일|||
+|2021.10.18.|움직이는미로탈출|https://www.acmicpc.net/problem/16954)|배열|
