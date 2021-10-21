@@ -1,0 +1,56 @@
+package algorithm;
+
+import java.util.Scanner;
+
+public class boj9633_N_Queen {
+	/*
+	 * N X N사이즈의 체스판 위에 퀸 N개를 서로 공격 할 수 없게 놓는다. 퀸을 놓는 방법의 수를 구하라!
+	 * 
+	 * dy, dx 사용하여 팔방 탐색? 한 줄에 하나씩 배치해야함
+	 * 
+	 */
+	static int N;
+	static int chess[][];
+	static boolean visited[];
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		N = sc.nextInt();
+		chess = new int[N + 1][N + 1];
+		visited = new boolean[N + 1];
+		visited[0] = true;// 이게필요한가
+		// 행에 대해서 visited체크,
+		bt(1);// 헹에 대해서 재귀체크
+	}
+
+	// 퀸을 놓는 방법 의 수
+	static int[] dy = { -1, -1, -1, 0, 1, 1, 1, 0 };
+	static int[] dx = { -1, 0, 1, 1, 1, 0, -1, -1 };
+
+	static void bt(int y) {
+		//기저조건?
+		
+		for(int i = 1; i < N; i++) {
+			for(int k = 0;  k < 8; k++) {
+				int ny = y + dy[k];
+				int nx = i + dx[k];
+				
+				if(ny < 1 || nx < 1 || ny > N || nx > N) continue; //체스판 범위를 벗어나면 넘어간다 -> 체스판 범위를 넘어가면.. 범위안에 괜찮다는거 아님? 
+				if(chess[ny][nx] == 1 || visited[ny]) return; //체스판 위치에 여왕 존재하거나, 방문한 열이면 못둔다는뜻이니까 되돌아가기
+				//기저조건에 대한 생각이 틀린 것 같음
+        //8방탐색과정에 1이 안나오면 그 자리에 있어도 되는 것 아님/???
+        //8방탐색 과정에 체스판 범위를 벗어나면 -> 1을 못만났따는 뜻 아닌가?
+        // 체스판 범위를 벗어나면 continue해서 다음 위치를 살피는게 맞나??
+				
+				
+				
+				
+			}
+			visited[i] = true;
+			chess[y][i] = 1;
+			bt(y+1);
+			
+			
+		}
+	}
+}
