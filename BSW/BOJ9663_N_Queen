@@ -1,0 +1,45 @@
+package algorithm;
+
+import java.util.Scanner;
+
+public class boj9663_N_Queen {
+	/*
+	 * N X N사이즈의 체스판 위에 퀸 N개를 서로 공격 할 수 없게 놓는다. 퀸을 놓는 방법의 수를 구하라!
+	 * 
+	 * 한 라인에는 하나의 퀸만 있어야 한다
+	 * 
+	 * 
+	 */
+	static int N, cnt;
+	static int chess[];
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		N = sc.nextInt();
+		chess = new int[N];
+		bt(0);// 행에 대해서 재귀체크
+	}
+
+	static void bt(int y) {
+		if (y == N) {
+			cnt++;
+		}
+		for (int i = 0; i < N; i++) {
+			chess[i] = y;// chess[i] => 행, 안에 들은 값은 y는 열
+			if (check(y)) {
+				bt(y + 1);
+			}
+		}
+	}
+
+	static public boolean check(int y) {
+		for (int i = 0; i < y; i++) {
+			if (chess[i] == chess[y] || Math.abs(y - i) == Math.abs(chess[y] - chess[i])) {
+				// 일직선상이던가 대각선상이면
+				return false;
+			}
+		}
+
+		return true;
+	}
+}
