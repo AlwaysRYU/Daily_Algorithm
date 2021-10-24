@@ -8,22 +8,23 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
-
 //https://www.acmicpc.net/problem/12100
-public class D31_2048_테스트용 {
+public class D31_2048_2트 {
 	static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-	static int N, answer;
+	static int N;
+	static long answer;
 	static int[] direction = new int[5];
 
-	static int[][] fieldC;
-	static int[][] field;
+	static long[][] fieldC;
+	static long[][] field;
 
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = null;
 
 		N = Integer.parseInt(br.readLine());
-		field = new int[N][N];
+		field = new long[N][N];
+		fieldC = new long[N][N];
 		for (int i = 0; i < N; i++) {
 			st = new StringTokenizer(br.readLine());
 			for (int j = 0; j < N; j++) {
@@ -32,14 +33,8 @@ public class D31_2048_테스트용 {
 		}
 
 		answer = 0;
-		fieldC = field.clone();
-		direction = new int[] { 0, 1, 2, 3, 1};
-		for (int i = 0; i < 5; i++) {
-			go_block(direction[i]);
-		}
-		
-		
-//		play2048(0);
+
+		play2048(0);
 
 		System.out.println(answer);
 
@@ -53,7 +48,13 @@ public class D31_2048_테스트용 {
 			System.out.println(Arrays.toString(direction));
 
 			// 방향대로 계산
-			fieldC = field.clone();
+
+			for (int i = 0; i < N; i++) {
+				for (int j = 0; j < N; j++) {
+					fieldC[i][j] = field[i][j];
+				}
+			}
+
 			for (int i = 0; i < 5; i++) {
 				go_block(direction[i]);
 			}
@@ -74,13 +75,13 @@ public class D31_2048_테스트용 {
 	static int[] dy = { 0, 1, 0, -1 };
 
 	static class Node {
-		int number;
+		long number;
 		boolean change;
 
 		public Node() {
 		}
 
-		public Node(int number, boolean change) {
+		public Node(long number, boolean change) {
 			this.number = number;
 			this.change = change;
 		}
@@ -93,7 +94,7 @@ public class D31_2048_테스트용 {
 
 		if (dir == 0) {
 			// 위로 옮기기
-			System.out.println("위로 옮길 것");
+			System.out.println("위로 옮기기 ");
 			for (int i = 0; i < N; i++) {
 				listindex = 0;
 				list.clear();
@@ -120,10 +121,6 @@ public class D31_2048_테스트용 {
 					}
 				}
 				// 리스트에서 배열로 옮겨주기
-				for (Node X : list) {
-					System.out.print(X.number + " ");
-				}
-				System.out.println();
 
 				int max = list.size();
 				for (int j = 0; j < N; j++) {
@@ -131,6 +128,7 @@ public class D31_2048_테스트용 {
 						fieldC[j][i] = 0;
 					} else {
 						fieldC[j][i] = list.get(j).number;
+						answer = Math.max(fieldC[j][i], answer);
 					}
 				}
 			}
@@ -141,7 +139,7 @@ public class D31_2048_테스트용 {
 			for (int j = 0; j < N; j++) {
 				listindex = 0;
 				list.clear();
-				for (int i = 0; i < N; i++) {
+				for (int i = N - 1; i >= 0; i--) {
 					if (fieldC[j][i] != 0) {
 						if (list.size() == 0) {
 							// 리스트에 숫자가 한개도 없으면
@@ -168,17 +166,18 @@ public class D31_2048_테스트용 {
 					System.out.print(X.number + " ");
 				}
 				System.out.println();
-
-				
 				int temp = N - list.size();
 				int index = 0;
-				for (int i = 0 ; i < N; i++) {
-					if ( i >= temp ) {
-						fieldC[j][i] = list.get(index).number;
-						index +=1;
-					} else fieldC[j][i] = 0;
+				for (int i = 0; i < N; i++) {
+
+					if (index < list.size()) {
+						fieldC[j][N - 1 - i] = list.get(index).number;
+						answer = Math.max(fieldC[j][i], answer);
+						index += 1;
+					} else
+						fieldC[j][N - 1 - i] = 0;
 				}
-				
+
 			}
 
 		} else if (dir == 2) {
@@ -187,7 +186,7 @@ public class D31_2048_테스트용 {
 			for (int i = 0; i < N; i++) {
 				listindex = 0;
 				list.clear();
-				for (int j = 0; j < N; j++) {
+				for (int j = N-1; j >= 0; j--) {
 					if (fieldC[j][i] != 0) {
 						if (list.size() == 0) {
 							// 리스트에 숫자가 한개도 없으면
@@ -209,19 +208,18 @@ public class D31_2048_테스트용 {
 						}
 					}
 				}
-				// 리스트에서 배열로 옮겨주기
-				for (Node X : list) {
-					System.out.print(X.number + " ");
-				}
-				System.out.println();
 
+				// 리스트에서 배열로 옮겨주기
 				int temp = N - list.size();
 				int index = 0;
-				for (int j = 0 ; j < N; j++) {
-					if ( j >= temp ) {
-						fieldC[j][i] = list.get(index).number;
+				for (int j = 0; j < N; j++) {
+
+					if (index < list.size()) {
+						fieldC[N-1-j][i] = list.get(index).number;
+						answer = Math.max(fieldC[j][i], answer);
 						index += 1;
-					} else fieldC[j][i] = 0;
+					} else
+						fieldC[N-1-j][i] = 0;
 				}
 			}
 
@@ -254,17 +252,13 @@ public class D31_2048_테스트용 {
 					}
 				}
 				// 리스트에서 배열로 옮겨주기
-				for (Node X : list) {
-					System.out.print(X.number + " ");
-				}
-				System.out.println();
-
 				int max = list.size();
 				for (int i = 0; i < N; i++) {
 					if (i >= max) {
 						fieldC[j][i] = 0;
 					} else {
 						fieldC[j][i] = list.get(i).number;
+						answer = Math.max(fieldC[j][i], answer);
 					}
 				}
 			}
