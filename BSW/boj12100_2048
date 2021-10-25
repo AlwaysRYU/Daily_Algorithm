@@ -1,0 +1,190 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
+public class boj12100_2048 {
+
+	// 않이..
+
+	// 같은 숫자이면 더해진다
+	// 5번 이동해서 만들 수 있는 가장 큰 블록의 값
+	static int N;
+	static int map[][];
+	static int max = Integer.MIN_VALUE;
+
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		N = Integer.parseInt(br.readLine());
+		map = new int[N][N];
+		for (int i = 0; i < N; i++) {
+			StringTokenizer st = new StringTokenizer(br.readLine(), " ");
+			for (int j = 0; j < N; j++) {
+				map[i][j] = Integer.parseInt(st.nextToken());
+			}
+		}
+		game(0);
+		
+		
+		for(int i = 0; i < N; i++) {
+			for(int j = 0; j < N; j++) {
+				max = Math.max(max, map[i][j]);
+			}
+		}
+		
+		System.out.println(max);
+		
+	}
+
+	static void game(int cnt) {
+		if (cnt == 5) {// 5번 돌면 끝
+			return;
+		}
+
+		for (int i = 0; i < 4; i++) {
+			play(i);
+			game(cnt + 1);
+		}
+	}
+
+	static void play(int dir) {
+
+		switch (dir) {
+		case 0: // 오른쪽
+			right();
+			break;
+		case 1: // 왼쪽
+			left();
+			break;
+		case 2: // 위
+			up();
+			break;
+		case 3: // 아래
+			down();
+			break;
+		}
+	}
+
+	static void right() {
+
+		/*
+		 * 4 4 => 8 
+		 * 2 2 => 4 
+		 * 4 8 => 4 8
+		 * 
+		 */
+
+		for (int i = 0; i < N; i++) {
+			int rNum = 0; //참고숫자
+			int rEnd = N - 1; //오른쪽 끝 인덱스
+			for (int j = N - 1; j >= 0; j--) {
+				if (map[i][j] != 0) { //현재 둘러보는 위치 값이 0이 아니고
+					if (rNum != 0) { // rNum에 넣어둔 숫자가 0이 아니라는거는 이전에 0이아닌 숫자가 나왔다는 뜻
+						if (rNum == map[i][j]) { // rNum에 저장 된 값과 map[i][j]값이 같으면
+							map[i][rEnd] = rNum * 2; // 오른쪽 젤 끝에 2배 저장
+							rEnd--;// 젤 끝에 저장 했으니까 한칸 앞으로 땡기
+							rNum = 0;// 한번 계산 했으니까 다시 0으로 초기화
+							map[i][j] = 0;// 계산 끝났으니까 0으로 초기화
+						}
+					} else {
+						rNum = map[i][j];
+						map[i][j] = 0;// rNum에 저장햇으니까 0 으로 초기화
+						map[i][rEnd] = rNum;// 새로 등장한 숫자 현재 계산되지 않은 오른쪽 젤 끝에 저장
+//						rEnd--;
+					}
+
+				}
+
+			}
+
+		}
+
+	}
+
+	static void left() {
+		for (int i = 0; i < N; i++) {
+			int lNum = 0; //참고숫자
+			int lEnd = 0; //왼쪽 끝 인덱스
+			for (int j = 0; j < N; j++) {
+				if (map[i][j] != 0) { //현재 둘러보는 위치 값이 0이 아니고
+					if (lNum != 0) { // lNum에 넣어둔 숫자가 0이 아니라는거는 이전에 0이아닌 숫자가 나왔다는 뜻
+						if (lNum == map[i][j]) { // lNum에 저장 된 값과 map[i][j]값이 같으면
+							map[i][lEnd] = lNum * 2; // 왼쪽 젤 끝에 2배 저장
+							lEnd++;// 젤 끝에 저장 했으니까 한칸 앞으로 땡기
+							lNum = 0;// 한번 계산 했으니까 다시 0으로 초기화
+							map[i][j] = 0;// 계산 끝났으니까 0으로 초기화
+						}
+					} else {
+						lNum = map[i][j];
+						map[i][j] = 0;// lNum에 저장햇으니까 0 으로 초기화
+						map[i][lEnd] = lNum;// 새로 등장한 값을 현재 계산되지 않은 오른쪽 젤 끝에 저장
+						lEnd++;
+					}
+
+				}
+
+			}
+
+		}
+	}
+
+	static void up() {
+		
+		for (int i = 0; i < N; i++) {
+			int tNum = 0; //참고숫자
+			int tEnd = 0; //탑인덱스
+			for (int j = 0; j < N; j++) {
+				if (map[j][i] != 0) { 
+					if (tNum != 0) { 
+						if (tNum == map[j][i]) {
+							map[tEnd][i] = tNum * 2; 
+							tEnd++; 
+							tNum = 0; 
+							map[j][i] = 0;
+						}
+					} else {
+						tNum = map[j][i];
+						map[j][i] = 0; 
+						map[tEnd][i] = tNum;
+						tEnd++;
+					}
+
+				}
+
+			}
+
+		}
+
+	}
+
+	static void down() {
+
+		for (int i = 0; i < N; i++) {
+			int dNum = 0; //참고숫자
+			int dEnd = 0; //탑인덱스
+			for (int j = N-1; j >= 0; j--) {
+				if (map[j][i] != 0) { 
+					if (dNum != 0) { 
+						if (dNum == map[j][i]) {
+							map[dEnd][i] = dNum * 2; 
+							dEnd--; 
+							dNum = 0; 
+							map[j][i] = 0;
+						}
+					} else {
+						dNum = map[j][i];
+						map[j][i] = 0; 
+						map[dEnd][i] = dNum;
+						dEnd--;
+					}
+
+				}
+
+			}
+
+		}
+		
+	}
+
+}
