@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.StringTokenizer;
 
+// https://www.acmicpc.net/problem/1002
 public class D33_터렛 {
 	
 	public static void main(String[] args) throws Exception {
@@ -27,7 +28,7 @@ public class D33_터렛 {
 			
 			
 			int answer = cal( Ax, Ay, Bx, By, AR, BR );
-			bw.append(String.valueOf(answer));
+			bw.append(String.valueOf(answer) + "\n");
 			
 		}
 		
@@ -38,35 +39,19 @@ public class D33_터렛 {
 	}
 
 	private static int cal(int x1, int y1, int r1, int x2, int y2, int r2) {
-		int distance_pow = (int)(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));	// 중점간 거리 distance의 제곱 
-		 
-		 
+		int distance = (int)(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));	
+		
 		if(x1 == x2 && y1 == y2 && r1 == r2) {
 			return -1;
-		}
-		
-		
-		else if(distance_pow > Math.pow(r1 + r2, 2)) {
+		} else if(distance > Math.pow(r1 + r2, 2)) {
 			return 0;
-		}
- 
-		
-		else if(distance_pow < Math.pow(r2 - r1, 2)) {
+		} else if(distance == Math.pow(r1 + r2, 2)) {
+			return 1;
+		} else if(distance < Math.pow(r2 - r1, 2)) {
 			return 0;
-		}
-		
-		
-		else if(distance_pow == Math.pow(r2 - r1, 2)) {
+		} else if(distance == Math.pow(r2 - r1, 2)) {
 			return 1;
-		}
-        
-		
-		
-		else if(distance_pow == Math.pow(r1 + r2, 2)) {
-			return 1;
-		}
-		
-		else {
+		} else {
 			return 2;
 		}
 	}
