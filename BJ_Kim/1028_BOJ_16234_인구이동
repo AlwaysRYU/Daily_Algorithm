@@ -120,7 +120,7 @@ public class Main {
 						while(!queue.isEmpty()) { // 연합을 다시 조사
 							Node node = queue.poll(); 
 							for (int j2 = 0; j2 < al[node.y][node.x].size(); j2++) { //해당 리스트를 조사해서 
-								if(selected[al[node.y][node.x].get(j2).y][al[node.y][node.x].get(j2).x]) { // 선택된 녀석이라면(없어도 될듯)
+								if(selected[al[node.y][node.x].get(j2).y][al[node.y][node.x].get(j2).x]) { // 선택된 녀석이라면
 //									selected[al[node.y][node.x].get(j2).y][al[node.y][node.x].get(j2).x] = false;
 									queue.offer(new Node(al[node.y][node.x].get(j2).y,al[node.y][node.x].get(j2).x)); // 모든 부분을 탐색해야 하니 필요할듯
 									ar[al[node.y][node.x].get(j2).y][al[node.y][node.x].get(j2).x] = sum/count2; // 해당 연합의 공통 값들을 지정!
