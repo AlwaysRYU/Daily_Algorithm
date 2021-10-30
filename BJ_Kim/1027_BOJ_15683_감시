@@ -1,0 +1,250 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
+
+public class Main {
+
+	static int N,M,count,count2;
+	static int[] src = {0,1,2,3},tgt;
+	static boolean[][] fivecamera;
+	static int[] dy = {0,1,0,-1};
+	static int[] dx = {1,0,-1,0};
+	static ArrayList<Node> list = new ArrayList();
+	static int[][] ar;
+	public static void main(String[] args) throws Exception{
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		N = Integer.parseInt(st.nextToken());
+		M = Integer.parseInt(st.nextToken());
+		
+		ar = new int[N][M];
+		fivecamera = new boolean[N][M];
+		count = N*M;
+		for (int i = 0; i < N; i++) {
+			st = new StringTokenizer(br.readLine());
+			for (int j = 0; j < M; j++) {
+				ar[i][j] = Integer.parseInt(st.nextToken());
+				if(ar[i][j] < 5 && ar[i][j] > 0) {
+					list.add(new Node(i,j,0));
+				}
+				else if(ar[i][j] == 5) {
+					for (int k = 0; k < 4; k++) {
+						int ny = i+dy[k];
+						int nx = j+dx[k];
+						while(ny < N && nx < M && ny >= 0 && nx >= 0) {
+							if(ar[ny][nx] == 6)	{
+								break;
+							}
+							if(ar[ny][nx] == 0) 
+							{
+								ar[ny][nx] = -1;
+								fivecamera[ny][nx] = true;
+							}
+							ny+= dy[k];
+							nx+= dx[k];
+						}
+					}
+				}
+			}
+		}
+		tgt = new int[list.size()];
+		comb(0);
+		System.out.println(count);
+		//1~5 : 카메라 , 6 : 벽
+		// 각 카메라마다 방향을 정해야 함.(5번 제외)
+		//4방향이므로 중복조합으로 가능할듯
+	}
+	
+	private static void comb(int tgtIdx) {
+		if(tgtIdx == list.size()) { //방향들이 정해짐
+			count2 = 0;
+			for (int i = 0; i < list.size(); i++) {
+				rotate(list.get(i),tgt[i]);
+			}
+			for (int i = 0; i < N; i++) {
+				for (int j = 0; j < M; j++) {
+					if(ar[i][j] == 0)
+						count2++;
+				}
+			}
+//			for (int i = 0; i < N; i++) {
+//				for (int j = 0; j < M; j++) {
+//					System.out.print(ar[i][j] + " " );
+//				}
+//				System.out.println();
+//			}
+//			System.out.println();
+			for (int i = 0; i < list.size(); i++) {
+				rotate_rev(list.get(i),tgt[i]);
+			}
+			
+			count = Math.min(count, count2);
+			//0이 가장 적은 경우를 찾아야함.
+//			System.out.println(count);
+			return;
+		}
+		for (int i = 0; i < 4; i++) {
+			tgt[tgtIdx] = src[i];
+			comb(tgtIdx+1);
+		}
+	}
+
+	private static class Node {
+		int y;
+		int x; // xy좌표 설정
+		int d; // 차지하는 벽의 개수 (디폴트 0)
+		
+		public Node(int y, int x,int d) {
+			this.y = y;
+			this.x = x;
+			this.d = d;
+		}
+	}
+	
+	private static void rotate(Node node,int dir) {
+		//이전 카메라가 해당 장소를 방문했으면 방문하지 않도록 처리하는 걸 어떻게 해야 하나?
+		//1. 카메라 처리를 했다가 되롤리는 방법을 사용해야하나?
+		//2. 
+		int ny = node.y + dy[dir];
+		int nx = node.x + dx[dir];
+		switch(ar[node.y][node.x]) { //몇번 카메라냐
+		case 1:
+			while(ny < N && nx < M && ny >= 0 && nx >= 0) {
+				if(ar[ny][nx] == 6) break;
+				if(ar[ny][nx] == 0) {
+					ar[ny][nx] = -1;
+				}
+				ny+= dy[dir];
+				nx+= dx[dir];
+			}
+//			for (int i = 0; i < N; i++) {
+//				for (int j = 0; j < M; j++) {
+//					System.out.print(ar[i][j]+ " ");
+//				}
+//				System.out.println();
+//			}
+//			System.out.println(count2);
+			break;
+		case 2:
+			while(ny < N && nx < M && ny >= 0 && nx >= 0) {
+				if(ar[ny][nx] == 6) break;
+				if(ar[ny][nx] == 0) {
+					ar[ny][nx] = -1;
+				}
+				ny+= dy[dir];
+				nx+= dx[dir];
+			}
+			ny = node.y + dy[(dir+2)%4];
+			nx = node.x + dx[(dir+2)%4];
+			while(ny < N && nx < M && ny >= 0 && nx >= 0) {
+				if(ar[ny][nx] == 6) break;
+				if(ar[ny][nx] == 0) {
+					ar[ny][nx] = -1;
+				}
+				ny += dy[(dir+2)%4];
+				nx += dx[(dir+2)%4];
+			}
+			break;
+		case 3:
+			for (int i = 0; i < 2; i++) {
+				ny = node.y + dy[(dir+i)%4];
+				nx = node.x + dx[(dir+i)%4];
+			while(ny < N && nx < M && ny >= 0 && nx >= 0) {
+				if(ar[ny][nx] == 6) break;
+				if(ar[ny][nx] == 0) {
+					ar[ny][nx] = -1;
+				}
+				ny+= dy[(dir+i)%4];
+				nx+= dx[(dir+i)%4];
+			}
+			
+		}
+			break;
+		case 4:
+			for (int i = 0; i < 3; i++) {
+					ny = node.y + dy[(dir+i)%4];
+					nx = node.x + dx[(dir+i)%4];
+				while(ny < N && nx < M && ny >= 0 && nx >= 0) {
+					if(ar[ny][nx] == 6) break;
+					if(ar[ny][nx] == 0) {
+						ar[ny][nx] = -1;
+					}
+					ny+= dy[(dir+i)%4];
+					nx+= dx[(dir+i)%4];
+				}
+				
+			}
+		}
+	}
+	
+	private static void rotate_rev(Node node,int dir) {
+		//이전 카메라가 해당 장소를 방문했으면 방문하지 않도록 처리하는 걸 어떻게 해야 하나?
+		//1. 카메라 처리를 했다가 되롤리는 방법을 사용해야하나?
+		int ny = node.y + dy[dir];
+		int nx = node.x + dx[dir];
+		
+		switch(ar[node.y][node.x]) { //몇번 카메라냐
+		case 1:
+			while(ny < N && nx < M && ny >= 0 && nx >= 0) {
+				if(ar[ny][nx] == 6) break;
+				if(ar[ny][nx] == -1 && !fivecamera[ny][nx]) {
+					ar[ny][nx] = 0;
+				}
+				ny+= dy[dir];
+				nx+= dx[dir];
+			}
+			break;
+		case 2:
+			while(ny < N && nx < M && ny >= 0 && nx >= 0) {
+				if(ar[ny][nx] == 6) break;
+				if(ar[ny][nx] == -1 && !fivecamera[ny][nx]) {
+					ar[ny][nx] = 0;
+				}
+				ny+= dy[dir];
+				nx+= dx[dir];
+			}
+			ny = node.y + dy[(dir+2)%4];
+			nx = node.x + dx[(dir+2)%4];
+			while(ny < N && nx < M && ny >= 0 && nx >= 0) {
+				if(ar[ny][nx] == 6) break;
+				if(ar[ny][nx] == -1 && !fivecamera[ny][nx]) {
+					ar[ny][nx] = 0;
+				}
+				ny += dy[(dir+2)%4];
+				nx += dx[(dir+2)%4];
+			}
+			break;
+		case 3:
+			for (int i = 0; i < 2; i++) {
+				ny = node.y + dy[(dir+i)%4];
+				nx = node.x + dx[(dir+i)%4];
+			while(ny < N && nx < M && ny >= 0 && nx >= 0) {
+				if(ar[ny][nx] == 6) break;
+				if(ar[ny][nx] == -1 && !fivecamera[ny][nx]) {
+					ar[ny][nx] = 0;
+				}
+				ny+= dy[(dir+i)%4];
+				nx+= dx[(dir+i)%4];
+			}
+			
+		}
+			break;
+		case 4:
+			for (int i = 0; i < 3; i++) {
+					ny = node.y + dy[(dir+i)%4];
+					nx = node.x + dx[(dir+i)%4];
+				while(ny < N && nx < M && ny >= 0 && nx >= 0) {
+					if(ar[ny][nx] == 6) break;
+					if(ar[ny][nx] == -1 && !fivecamera[ny][nx]) {
+						ar[ny][nx] = 0;
+					}
+					ny+= dy[(dir+i)%4];
+					nx+= dx[(dir+i)%4];
+				}
+				
+			}
+		}
+	}
+}
