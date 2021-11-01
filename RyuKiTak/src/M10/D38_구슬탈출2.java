@@ -7,10 +7,11 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.StringTokenizer;
 
-public class D37_구슬탈출_찐제출용 {
+public class D38_구슬탈출2 {
 	static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 	static char[][] first;
 	static int N, M;
+	static boolean check = false;
 
 	static class Node {
 		int x;
@@ -32,7 +33,7 @@ public class D37_구슬탈출_찐제출용 {
 
 	static Node Red = new Node();
 	static Node Blue = new Node();
-	static int answer = 0;
+	static int answer = Integer.MAX_VALUE;
 	// -1은 답이없음 0은 실패 1은성공
 
 	public static void main(String[] args) throws Exception {
@@ -77,7 +78,11 @@ public class D37_구슬탈출_찐제출용 {
 //		moveBall(N_BlueX, N_BlueY, 2 , false);
 //		System.out.println(N_RedX +" " + N_RedY);
 //		System.out.println(N_BlueX +" " + N_BlueY);
-		System.out.println(answer);
+		if ( answer == Integer.MAX_VALUE ) {
+			System.out.println(-1);
+		} else {
+			System.out.println(answer+1);
+		}
 	}
 
 	static int N_RedX;
@@ -88,8 +93,6 @@ public class D37_구슬탈출_찐제출용 {
 	static int[] dy = { 0, 1, 0, -1 };
 
 	private static void play(int depth, Node Red, Node Blue) {
-		if (answer == 1)
-			return;
 		if (depth == 10) {
 //			System.out.println("연산종료!!");
 //			System.out.println("현재 기울인 횟수 " + depth);
@@ -128,16 +131,14 @@ public class D37_구슬탈출_찐제출용 {
 		}
 		// 결과에 따라
 		if (resultR == 1 && resultB== 0) {
-			
-			answer = 1;
+			// 둘중하나가 1인 경우만
+			answer = Math.min(answer, depth);
 			return;
 		} else if (resultR + resultB == 0) {
 			// 둘다 0 이면 다음 계산을 할수 있음
 			play(depth + 1, new Node(N_RedX, N_RedY), new Node(N_BlueX, N_BlueY));
 		}
 		// 둘다 1인 경우는 그냥 넘김
-		if (answer == 1)
-			return;
 		// 우 1 ------ //
 		// 초기화
 		N_RedX = Red.x;
@@ -159,14 +160,12 @@ public class D37_구슬탈출_찐제출용 {
 		if (resultR == 1 && resultB== 0) {
 			// 둘중하나가 1인 경우만
 //			System.out.println("성공!");
-			answer = 1;
+			answer = Math.min(answer, depth);
 			return;
 		} else if (resultR + resultB == 0) {
 			// 둘다 0 이면 다음 계산을 할수 있음
 			play(depth + 1, new Node(N_RedX, N_RedY), new Node(N_BlueX, N_BlueY));
 		}
-		if (answer == 1)
-			return;
 		// 밑 2
 		// 초기화
 		N_RedX = Red.x;
@@ -186,14 +185,12 @@ public class D37_구슬탈출_찐제출용 {
 		// 결과에 따라
 		if (resultR == 1 && resultB== 0) {
 			// 둘중하나가 1인 경우만
-			answer = 1;
+			answer = Math.min(answer, depth);
 			return;
 		} else if (resultR + resultB == 0) {
 			// 둘다 0 이면 다음 계산을 할수 있음
 			play(depth + 1, new Node(N_RedX, N_RedY), new Node(N_BlueX, N_BlueY));
 		}
-		if (answer == 1)
-			return;
 		
 		
 
@@ -215,14 +212,12 @@ public class D37_구슬탈출_찐제출용 {
 		// 결과에 따라
 		if (resultR == 1 && resultB== 0) {
 			// 둘중하나가 1인 경우만
-			answer = 1;
+			answer = Math.min(answer, depth);
 			return;
 		} else if (resultR + resultB == 0) {
 			// 둘다 0 이면 다음 계산을 할수 있음
 			play(depth + 1, new Node(N_RedX, N_RedY), new Node(N_BlueX, N_BlueY));
 		}
-		if (answer == 1)
-			return;
 	}
 
 	// 0은 벽을 만남 1은 탈출함
