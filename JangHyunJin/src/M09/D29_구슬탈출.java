@@ -22,13 +22,8 @@ class Ball{
 }
 public class 백준_구슬탈출{
 
-	/**
-	  *@since 2021. 6. 4.
-	  *@author skyworking
-	  *@see
-	  *@time 오전 1:34:10
-	  *@caution
-	  */
+
+	
 	
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringBuilder sb = new StringBuilder();
