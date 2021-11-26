@@ -33,3 +33,7 @@ ex)
 |2021.10.11.|공휴일|||
 |2021.10.18.|움직이는미로탈출|https://www.acmicpc.net/problem/16954|배열|
 |2021.10.25.|2048(Easy)|https://www.acmicpc.net/problem/12100|시뮬레이션|
+|2021.11.01.|구슬탈출|https://www.acmicpc.net/problem/13459|시뮬레이션|
+|2021.11.08.|랜선 자르기|https://www.acmicpc.net/problem/1654|이분탐색|
+|2021.11.08.|주사위 굴리기|https://www.acmicpc.net/problem/14499|시뮬레이션|
+|2021.11.20.|상어초등학교|https://www.acmicpc.net/problem/21608|시뮬레이션|
